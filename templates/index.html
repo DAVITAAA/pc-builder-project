@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SynthForge PC Builder — Component List</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="page">
+        <header class="top">
+            <div>
+                <h1>SynthForge PC Builder</h1>
+                <p style="margin-top:6px;">Build, validate, and summarize your dream rig with real-time component compatibility checks.</p>
+            </div>
+            <div class="controls" aria-hidden="true">
+                <button class="btn">Save Draft</button>
+                <button class="btn primary">Share Build</button>
+            </div>
+        </header>
+
+        <div class="grid" role="main">
+
+            <aside class="panel" aria-label="Component Library">
+                <div class="panel-head">
+                    <h3>Component Library</h3>
+                    <div class="meta" id="left-count">6 ITEMS</div>
+                </div>
+
+                <div class="tabs" role="tablist" aria-label="component types">
+                    <button class="tab active" data-type="all">All</button>
+                    <button class="tab" data-type="cpu">CPU</button>
+                    <button class="tab" data-type="gpu">GPU</button>
+                    <button class="tab" data-type="storage">Storage</button>
+                    <button class="tab" data-type="mb">Motherboard</button>
+                    <button class="tab" data-type="memory">Memory</button>
+                    <button class="tab" data-type="psu">PSU</button>
+                </div>
+
+                <div class="search">
+                    <select id="component-dropdown" title="Select a component">
+                        <option value="">— Select a Component —</option>
+                        </select>
+                </div>
+                <div class="components" id="componentsList">
+                    </div>
+
+                <div class="no-match" id="noMatch" style="display:none;">No components match the current filter.</div>
+            </aside>
+
+            <section class="list-panel" aria-label="Selected components list">
+                <div class="panel-head">
+                    <h3>Your Current Build</h3>
+                    <div class="meta" id="center-list-count">0 COMPONENTS ADDED</div>
+                </div>
+
+                <div class="built-list-container" id="builtListContainer">
+                    <div class="built-list-empty-state">
+                        <p>Drag components from the library to this panel or select them from the dropdown menu to start your build.</p>
+                    </div>
+                    </div>
+            </section>
+            <aside class="build-panel" aria-label="Compatibility check and bottleneck calculator">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <h3>Compatibility & Bottleneck</h3>
+                    <div class="meta total-price">BUILD STATUS</div>
+                </div>
+
+                <div class="build-overview" id="buildOverview">
+                    <div class="compat" id="compatibilityStatus">✅ Compatibility Check: Initializing...</div>
+                    
+                    <div class="bottleneck-panel" style="margin-top: 18px;">
+                        <h4>Bottleneck Analysis (CPU/GPU)</h4>
+                        <div class="bottleneck-status" id="bottleneckStatus">
+                            Select a CPU and GPU to analyze.
+                        </div>
+                    </div>
+                    <div class="stats-panel compat success-message" style="margin-top: 10px;">
+                        Est. Power Draw: 0W
+                    </div>
+                    
+                    <button class="btn primary" id="buyButton" style="width:100%; margin-top: 20px;">Finalize Build</button>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
