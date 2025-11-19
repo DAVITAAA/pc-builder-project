@@ -9,7 +9,7 @@ const components = [
     { id: 'p1', name: 'Storm 1000W PSU', type: 'psu', desc: '80+ Gold fully modular power supply', bottleneck_score: 0, power: 0 },
 ];
 
-// DOM Refs (Unchanged)
+// DOM Refs
 const componentsList = document.getElementById('componentsList');
 const componentDropdown = document.getElementById('component-dropdown'); 
 const tabs = document.querySelectorAll('.tab');
@@ -21,7 +21,7 @@ const bottleneckStatus = document.getElementById('bottleneckStatus');
 const statsPanel = document.querySelector('.stats-panel');
 const totalPriceMeta = document.querySelector('.total-price');
 const buyButton = document.getElementById('buyButton');
-
+const leftCount = document.getElementById('left-count'); // დამატებულია
 let placedItems = []; 
 
 // Function: Populate the dropdown menu
@@ -35,7 +35,6 @@ function populateDropdown(currentFilter) {
     filteredByTab.forEach(c => {
         const option = document.createElement('option');
         option.value = c.id;
-        // ფასის ჩვენების ამოღება
         option.textContent = `${c.name} (${c.type.toUpperCase()})`;
         componentDropdown.appendChild(option);
     });
@@ -51,7 +50,10 @@ function renderList(selectedId = '') {
         (selectedId === '' || c.id === selectedId)
     );
 
-    leftCount.textContent = filtered.length + ' ITEMS';
+    if (leftCount) {
+        leftCount.textContent = filtered.length + ' ITEMS';
+    }
+    
     noMatch.style.display = filtered.length === 0 ? 'block' : 'none';
 
     filtered.forEach(c => {
@@ -80,7 +82,7 @@ function renderList(selectedId = '') {
     });
 }
 
-// Function: Add a component to the central Built List (Unchanged)
+// Function: Add a component to the central Built List
 function addComponentToBuiltList(comp) {
     if (placedItems.some(item => item.comp.type === comp.type && (comp.type === 'cpu' || comp.type === 'gpu' || comp.type === 'mb' || comp.type === 'psu'))) {
         alert(`You already have a ${comp.type.toUpperCase()} component in your build. Please remove it first.`);
@@ -129,11 +131,10 @@ function updateBuiltListUI() {
     updateBottleneckAndSummary(placedItems.length);
 }
 
-// Function: Bottleneck Calculation and Summary Update (განახლებული)
+// Function: Bottleneck Calculation and Summary Update
 function updateBottleneckAndSummary(count) {
     centerListCount.textContent = count + ' COMPONENTS ADDED';
     
-    // Total Price calculation removed
     const totalPower = placedItems.reduce((sum, item) => sum + (item.comp.power || 0), 0);
     
     // 1. Compatibility Check 
@@ -145,8 +146,10 @@ function updateBottleneckAndSummary(count) {
     let compatibilityMessage = '';
     if (hasCPU && hasGPU && hasMB && hasPSU) {
         compatibilityMessage = '✅ Compatibility Check: **All Core Components Present and Compatible.**';
+        compatibilityStatus.classList.remove('compat-warning');
     } else {
         compatibilityMessage = '⚠️ Compatibility Check: Missing core components (MB, CPU, GPU, or PSU).';
+        compatibilityStatus.classList.add('compat-warning');
     }
     compatibilityStatus.innerHTML = compatibilityMessage;
 
@@ -154,46 +157,53 @@ function updateBottleneckAndSummary(count) {
     const cpu = placedItems.find(item => item.comp.type === 'cpu');
     const gpu = placedItems.find(item => item.comp.type === 'gpu');
     
-    if (cpu && gpu) {
-        // Calculation based on scores (Higher score is better performance)
-        const cpuScore = cpu.comp.bottleneck_score;
-        const gpuScore = gpu.comp.bottleneck_score;
-        const scoreDiff = Math.abs(cpuScore - gpuScore);
-        
-        // Calculate bottleneck percentage (Simulated)
-        let bottleneckPercent = (scoreDiff / Math.max(cpuScore, gpuScore)) * 100 * 0.8;
-        bottleneckPercent = Math.min(30, Math.max(2, bottleneckPercent)); // Clamp between 2% and 30%
+    if (bottleneckStatus) { // დაცვა null-ისგან
+        if (cpu && gpu) {
+            const cpuScore = cpu.comp.bottleneck_score;
+            const gpuScore = gpu.comp.bottleneck_score;
+            const scoreDiff = Math.abs(cpuScore - gpuScore);
+            
+            let bottleneckPercent = (scoreDiff / Math.max(cpuScore, gpuScore)) * 100 * 0.8;
+            bottleneckPercent = Math.min(30, Math.max(2, bottleneckPercent)); 
 
-        let statusClass = 'low';
-        let statusText = `${bottleneckPercent.toFixed(1)}% CPU/GPU Bottleneck. **Excellent Balance.**`;
+            let statusClass = 'low';
+            let statusText = `${bottleneckPercent.toFixed(1)}% CPU/GPU Bottleneck. **Excellent Balance.**`;
 
-        if (bottleneckPercent > 20) {
-            statusClass = 'high';
-            const bottleneckedComponent = cpuScore < gpuScore ? 'CPU' : 'GPU';
-            statusText = `${bottleneckPercent.toFixed(1)}% Bottleneck. **The ${bottleneckedComponent} is likely limiting performance.**`;
-        } else if (bottleneckPercent > 10) {
-            statusClass = 'medium';
-            statusText = `${bottleneckPercent.toFixed(1)}% CPU/GPU Bottleneck. **Good Balance.**`;
+            if (bottleneckPercent > 20) {
+                statusClass = 'high';
+                const bottleneckedComponent = cpuScore < gpuScore ? 'CPU' : 'GPU';
+                statusText = `${bottleneckPercent.toFixed(1)}% Bottleneck. **The ${bottleneckedComponent} is likely limiting performance.**`;
+            } else if (bottleneckPercent > 10) {
+                statusClass = 'medium';
+                statusText = `${bottleneckPercent.toFixed(1)}% CPU/GPU Bottleneck. **Good Balance.**`;
+            }
+
+            bottleneckStatus.className = `bottleneck-status ${statusClass}`;
+            bottleneckStatus.innerHTML = statusText;
+
+        } else {
+            bottleneckStatus.className = 'bottleneck-status';
+            bottleneckStatus.innerHTML = 'Select a CPU and GPU to analyze.';
         }
-
-        bottleneckStatus.className = `bottleneck-status ${statusClass}`;
-        bottleneckStatus.innerHTML = statusText;
-
-    } else {
-        bottleneckStatus.className = 'bottleneck-status';
-        bottleneckStatus.innerHTML = 'Select a CPU and GPU to analyze.';
     }
 
+
     // 3. Summary/Stats Update (Power Draw)
-    totalPriceMeta.textContent = `BUILD STATUS`;
-    statsPanel.innerHTML = `Est. Power Draw: ${totalPower.toFixed(0)}W`;
+    if (totalPriceMeta) {
+        totalPriceMeta.textContent = `BUILD STATUS`;
+    }
+    if (statsPanel) {
+        statsPanel.innerHTML = `Est. Power Draw: ${totalPower.toFixed(0)}W`;
+    }
     
     // Buy button text changed
-    buyButton.textContent = `Finalize Build`;
+    if (buyButton) {
+        buyButton.textContent = `Finalize Build`;
+    }
 }
 
 
-// --- EVENT LISTENERS (Unchanged) ---
+// --- EVENT LISTENERS ---
 tabs.forEach(t => t.addEventListener('click', (e) => {
     tabs.forEach(x => x.classList.remove('active'));
     e.currentTarget.classList.add('active');
@@ -205,50 +215,96 @@ tabs.forEach(t => t.addEventListener('click', (e) => {
     renderList();
 }));
 
-componentDropdown.addEventListener('change', (e) => {
-    const selectedId = e.target.value;
-    if (selectedId) {
-        const comp = components.find(x => x.id === selectedId);
+if (componentDropdown) {
+    componentDropdown.addEventListener('change', (e) => {
+        const selectedId = e.target.value;
+        if (selectedId) {
+            const comp = components.find(x => x.id === selectedId);
+            if (comp) {
+                addComponentToBuiltList(comp);
+                e.target.value = ''; 
+                renderList(); 
+            }
+        }
+    });
+}
+
+
+if (builtListContainer) {
+    builtListContainer.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.currentTarget.style.border = '1px dashed var(--muted)';
+        e.dataTransfer.dropEffect = 'copy';
+    });
+
+    builtListContainer.addEventListener('dragleave', (e) => {
+        e.currentTarget.style.border = 'none';
+    });
+
+    builtListContainer.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.currentTarget.style.border = 'none';
+        const id = e.dataTransfer.getData('text/plain');
+        const comp = components.find(x => x.id === id);
         if (comp) {
             addComponentToBuiltList(comp);
-            e.target.value = ''; 
-            renderList(); 
+            componentDropdown.value = '';
+            renderList();
         }
-    }
-});
+    });
+}
 
-builtListContainer.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    e.currentTarget.style.border = '1px dashed var(--muted)';
-    e.dataTransfer.dropEffect = 'copy';
-});
-
-builtListContainer.addEventListener('dragleave', (e) => {
-    e.currentTarget.style.border = 'none';
-});
-
-builtListContainer.addEventListener('drop', (e) => {
-    e.preventDefault();
-    e.currentTarget.style.border = 'none';
-    const id = e.dataTransfer.getData('text/plain');
-    const comp = components.find(x => x.id === id);
-    if (comp) {
-        addComponentToBuiltList(comp);
-        componentDropdown.value = '';
-        renderList();
-    }
-});
-
-componentsList.addEventListener('dblclick', (e) => {
-    const card = e.target.closest('.comp-card');
-    if(card) {
-        const comp = components.find(x => x.id === card.dataset.id);
-        if(comp) addComponentToBuiltList(comp);
-    }
-});
+if (componentsList) {
+    componentsList.addEventListener('dblclick', (e) => {
+        const card = e.target.closest('.comp-card');
+        if(card) {
+            const comp = components.find(x => x.id === card.dataset.id);
+            if(comp) addComponentToBuiltList(comp);
+        }
+    });
+}
 
 
-// --- INITIAL SETUP (Unchanged) ---
 populateDropdown('all');
 renderList();
 updateBuiltListUI();
+
+
+
+
+const themeSelector = document.getElementById('themeSelector');
+const body = document.body;
+
+
+function applyTheme(themeName) {
+    body.classList.remove('theme-minimal', 'theme-darkstar');
+    if (themeName !== 'cyberpunk') {
+        body.classList.add(`theme-${themeName}`);
+    }
+    
+    // 3. Grid/Animation მართვა
+    if (themeName === 'cyberpunk') {
+        body.style.backgroundImage = ''; 
+        body.style.animation = '';
+    } else {
+        body.style.backgroundImage = 'none';
+        body.style.animation = 'none';
+    }
+    localStorage.setItem('selectedTheme', themeName);
+}
+
+if (themeSelector) {
+    themeSelector.addEventListener('change', (e) => {
+        applyTheme(e.target.value);
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('selectedTheme') || 'cyberpunk';
+    if (themeSelector) {
+        themeSelector.value = savedTheme;
+    }
+    
+    applyTheme(savedTheme); 
+});
