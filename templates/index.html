@@ -3,27 +3,26 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>SynthForge PC Builder — Component List</title>
+    <title>SynthForge PC Builder</title>
     
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-</head>
+
+    </head>
 <body>
 
     <div class="page">
+        
         <header class="top">
             <div>
-                <h1>SynthForge PC Builder</h1>
-                <p style="margin-top:6px;">Build, validate, and summarize your dream rig with real-time component compatibility checks.</p>
+                <h1 class="title"><span class="title-accent">SynthForge PC Builder</span></h1>
+                <p style="margin-top:6px; opacity: 0.8;">Build, validate, and summarize your dream rig with real-time component compatibility checks.</p>
             </div>
             
             <div class="controls" aria-hidden="true">
-                <select id="themeSelector" class="theme-selector">
-                    <option value="cyberpunk">Cyberpunk / Neon</option>
-                    <option value="minimal">Minimal White</option>
-                    <option value="darkstar">Dark Starfield</option>
-                </select>
+                <a href="{{ url_for('drafts') }}" class="btn" style="text-decoration: none; padding: 8px 16px;">View Drafts</a>
             </div>
         </header>
 
@@ -32,26 +31,26 @@
             <aside class="panel" aria-label="Component Library">
                 <div class="panel-head">
                     <h3>Component Library</h3>
-                    <div class="meta" id="left-count">6 ITEMS</div>
+                    <div class="meta" id="left-count">Loading...</div>
                 </div>
 
                 <div class="tabs" role="tablist" aria-label="component types">
                     <button class="tab active" data-type="all">All</button>
                     <button class="tab" data-type="cpu">CPU</button>
                     <button class="tab" data-type="gpu">GPU</button>
-                    <button class="tab" data-type="storage">Storage</button>
                     <button class="tab" data-type="mb">Motherboard</button>
-                    <button class="tab" data-type="memory">Memory</button>
+                    <button class="tab" data-type="ram">Memory</button>
                     <button class="tab" data-type="psu">PSU</button>
+                    <button class="tab" data-type="storage">Storage</button>
                 </div>
 
                 <div class="search">
                     <select id="component-dropdown" title="Select a component">
                         <option value="">— Select a Component —</option>
-                        </select>
+                    </select>
                 </div>
-                <div class="components" id="componentsList">
-                    </div>
+                
+                <div class="components" id="componentsList"></div>
 
                 <div class="no-match" id="noMatch" style="display:none;">No components match the current filter.</div>
             </aside>
@@ -66,12 +65,13 @@
                     <div class="built-list-empty-state">
                         <p>Drag components from the library to this panel or select them from the dropdown menu to start your build.</p>
                     </div>
-                    </div>
+                </div>
             </section>
+
             <aside class="build-panel" aria-label="Compatibility check and bottleneck calculator">
                 <div style="display:flex;align-items:center;justify-content:space-between;">
                     <h3>Compatibility & Bottleneck</h3>
-                    <div class="meta total-price">BUILD STATUS</div>
+                    <div class="meta total-price" id="statsPanelHeader">BUILD STATUS</div>
                 </div>
 
                 <div class="build-overview" id="buildOverview">
@@ -83,17 +83,38 @@
                             Select a CPU and GPU to analyze.
                         </div>
                     </div>
-                    <div class="stats-panel compat success-message" style="margin-top: 10px;">
-                        Est. Power Draw: 0W
-                    </div>
                     
-                    <button class="btn primary" id="buyButton" style="width:100%; margin-top: 20px;">Finalize Build</button>
+                    <div class="stats-panel compat success-message" id="statsPanel" style="margin-top: 10px;">
+                        Est. Power Draw: 0W | Total Price: $0.00
+                    </div>
+
+                    <button id="finalizeBuildBtn" class="glow-btn" style="display: none;">
+                        FINALIZE & SAVE BUILD
+                    </button>
                 </div>
             </aside>
 
         </div>
     </div>
 
+    <div id="sf-custom-modal" class="sf-modal-overlay hidden">
+        <div class="sf-modal-content">
+            <div class="sf-modal-header">
+                <h3 id="sf-modal-title">System Alert</h3> 
+            </div>
+            <div class="sf-modal-body">
+                <p id="sf-modal-message"></p>
+            </div>
+            <div class="sf-modal-footer">
+                <button id="sf-modal-close-btn" class="sf-modal-btn">Close</button>
+                
+                <button id="sf-modal-replace-btn" class="sf-modal-btn replace-btn" style="display: none;">
+                    Replace
+                </button>
+            </div>
+        </div>
+    </div>
+        
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

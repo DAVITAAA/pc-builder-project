@@ -1,0 +1,144 @@
+{
+  "cpu": [
+    {
+      "id": "cpu-1",
+      "name": "AMD Ryzen 7 7800X3D",
+      "price": 350,
+      "socket": "AM5",
+      "cores": 8,
+      "wattage": 120,
+      "performance_score": 88
+    },
+    {
+      "id": "cpu-2",
+      "name": "AMD Ryzen 5 7600X",
+      "price": 220,
+      "socket": "AM5",
+      "cores": 6,
+      "wattage": 105,
+      "performance_score": 75
+    },
+    {
+      "id": "cpu-3",
+      "name": "Intel Core i7-14700K",
+      "price": 380,
+      "socket": "LGA 1700",
+      "cores": 20,
+      "wattage": 125,
+      "performance_score": 95
+    },
+    {
+      "id": "cpu-4",
+      "name": "Intel Core i5-13600K",
+      "price": 280,
+      "socket": "LGA 1700",
+      "cores": 14,
+      "wattage": 125,
+      "performance_score": 80
+    }
+  ],
+  "gpu": [
+    {
+      "id": "gpu-1",
+      "name": "NVIDIA GeForce RTX 4080 Super",
+      "price": 1000,
+      "type": "gpu",
+      "wattage": 320,
+      "performance_score": 98
+    },
+    {
+      "id": "gpu-2",
+      "name": "AMD Radeon RX 7900 XT",
+      "price": 800,
+      "type": "gpu",
+      "wattage": 300,
+      "performance_score": 92
+    },
+    {
+      "id": "gpu-3",
+      "name": "NVIDIA GeForce RTX 4070 Ti",
+      "price": 700,
+      "type": "gpu",
+      "wattage": 285,
+      "performance_score": 85
+    },
+    {
+      "id": "gpu-4",
+      "name": "AMD Radeon RX 7700 XT",
+      "price": 450,
+      "type": "gpu",
+      "wattage": 245,
+      "performance_score": 70
+    }
+  ],
+  "mb": [
+    {
+      "id": "mb-1",
+      "name": "ASUS ROG STRIX B650-A GAMING WIFI",
+      "price": 250,
+      "socket": "AM5",
+      "chipset": "B650",
+      "max_ram_speed": 6000,
+      "wattage": 50
+    },
+    {
+      "id": "mb-2",
+      "name": "MSI PRO Z790-P WIFI",
+      "price": 280,
+      "socket": "LGA 1700",
+      "chipset": "Z790",
+      "max_ram_speed": 7200,
+      "wattage": 60
+    },
+    {
+      "id": "mb-3",
+      "name": "Gigabyte A620M GAMING X",
+      "price": 150,
+      "socket": "AM5",
+      "chipset": "A620",
+      "max_ram_speed": 5200,
+      "wattage": 40
+    }
+  ],
+  "psu": [
+    {
+      "id": "psu-1",
+      "name": "Corsair RM1000x (2021) 1000 W",
+      "price": 180,
+      "wattage": 1000,
+      "efficiency": "Gold"
+    },
+    {
+      "id": "psu-2",
+      "name": "SeaSonic FOCUS GX 850 W",
+      "price": 130,
+      "wattage": 850,
+      "efficiency": "Gold"
+    },
+    {
+      "id": "psu-3",
+      "name": "EVGA SuperNOVA 750 GT 750 W",
+      "price": 100,
+      "wattage": 750,
+      "efficiency": "Gold"
+    }
+  ],
+  "ram": [
+    {
+      "id": "ram-1",
+      "name": "G.Skill Ripjaws S5 32 GB (2 x 16 GB) DDR5-6000 CL30",
+      "price": 100,
+      "speed": 6000,
+      "size": 32,
+      "wattage": 10
+    },
+    {
+      "id": "ram-2",
+      "name": "Corsair Vengeance 32 GB (2 x 16 GB) DDR5-7200 CL34",
+      "price": 150,
+      "speed": 7200,
+      "size": 32,
+      "wattage": 10
+    }
+  ]
+}

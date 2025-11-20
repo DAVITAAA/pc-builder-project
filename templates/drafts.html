@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SynthForge PC Builder — Drafts</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+
+    <script>
+        // Flask-ის მიერ გადაცემული builds_list-ის ინექცია გლობალურ JS ცვლადში
+        // რედაქტორის შეცდომის თავიდან ასაცილებლად, ვიყენებთ JSON.parse-ს.
+        const FLASK_SAVED_BUILDS = JSON.parse('{{ saved_builds | tojson | safe }}');
+    </script>
+
+
+</head>
+
+<body>
+
+    <div class="page">
+        
+        <header class="top">
+            <div>
+                <h1>SynthForge PC Builder</h1>
+                <p style="margin-top:6px; opacity: 0.8;">Your Saved Drafts and Finalized Builds</p>
+            </div>
+            
+            <div class="controls" aria-hidden="true">
+                <a href="{{ url_for('home') }}" class="btn" style="text-decoration: none; padding: 8px 16px;">← Back to Builder</a>
+            </div>
+        </header>
+
+        <div class="grid" role="main">
+            
+            <section class="list-panel" style="grid-column: 1 / span 3; min-height: 70vh;" aria-label="Saved Drafts List">
+                <div class="panel-head">
+                    <h3>Draft History</h3>
+                    <div class="meta" id="draftsCount">0 Drafts</div>
+                </div>
+
+                <div class="drafts-list-container" id="draftsListContainer">
+                    
+                    <div class="built-list-empty-state">
+                        <p>No drafts found. Build a PC and click 'FINALIZE & SAVE BUILD' to see your history here.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="sf-custom-modal" class="sf-modal-overlay hidden">
+        <div class="sf-modal-content">
+            <div class="sf-modal-header">
+                <h3>System Alert</h3>
+            </div>
+            <div class="sf-modal-body">
+                <p id="sf-modal-message"></p>
+            </div>
+            <div class="sf-modal-footer">
+                <button id="sf-modal-close-btn" class="sf-modal-btn">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
