@@ -1,14 +1,18 @@
 /* ========================================================================
+
    0. RESET & ROOT VARIABLES (NEON ORANGE)
+
    ======================================================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+
+
 :root {
-    
     --color-primary: #ff3d00; /* Neon Orange */
     --color-primary-glow: rgba(255, 61, 0, 0.4);
     --color-background: #050505; /* --bg-dark */
@@ -22,16 +26,20 @@
     --border-radius-sm: 6px;
     --spacing: 20px;
 }
+
 .title {
     font-size: 2.2em;
     font-weight: 900; 
     margin: 0;
-    
 }
+
+
 
 .title-white {
     color: var(--color-text-light); /* Use root variable */
 }
+
+
 
 .title-accent {
     color: var(--color-primary); /* Use root variable */
@@ -39,15 +47,18 @@
         0 0 20px rgba(255, 140, 0, 0.6), 
         0 0 20px rgba(255, 140, 0, 0.4);
 }
+
 /* ========================================================================
    1. BODY & GLOBAL STYLES
    ======================================================================== */
+
 html, body {
-    /* Ensures body is full height for better scrolling control */
     height: 100%;
     margin: 0;
     padding: 0;
 }
+
+
 
 body {
     background-image: url(bg.jpg);
@@ -55,14 +66,17 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    
     background-color: var(--color-background);
     color: var(--color-text-light);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
     line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s; 
+
 }
+
+
 
 .page {
     max-width: 1600px;
@@ -70,13 +84,12 @@ body {
     padding: var(--spacing);
     display: flex;
     flex-direction: column;
-    min-height: 100%; /* Must be min-height: 100% to allow content overflow */
+    min-height: 100%; 
 }
 
 h1 { font-size: 1.8rem; letter-spacing: -1px; color: var(--color-text-light); }
 h3 { font-size: 1rem; text-transform: uppercase; color: var(--color-text-light); }
 h4 { font-size: 0.95rem; font-weight: 600; }
-
 
 /* --- BUTTONS & CONTROLS --- */
 .btn, .theme-selector {
@@ -96,8 +109,6 @@ h4 { font-size: 0.95rem; font-weight: 600; }
     background: #333;
     border-color: var(--color-primary);
 }
-
-
 /* ========================================================================
    2. HEADER & LAYOUT
    ======================================================================== */
@@ -111,17 +122,20 @@ h4 { font-size: 0.95rem; font-weight: 600; }
     border-radius: var(--border-radius-lg);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.1);
+    /* 🔥 FIX 1: აუცილებელია z-index-ის კონტექსტის შესაქმნელად */
+    position: relative; 
+    z-index: 10001; 
 }
 
 .controls { 
     display: flex; 
     gap: 15px; 
     align-items: center;
+    z-index: 1000;
 }
 
 .grid {
     display: grid;
-    /* user's grid template for tight layout */
     grid-template-columns: 300px 1fr 320px; 
     gap: var(--spacing);
     height: calc(100vh - 140px); /* Adjust based on header height */
@@ -137,463 +151,1114 @@ h4 { font-size: 0.95rem; font-weight: 600; }
     flex-direction: column;
     backdrop-filter: blur(10px);
     overflow: hidden;
+
 }
 
+
+
 .panel-head {
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
+
     margin-bottom: 15px;
+
     border-bottom: 1px solid var(--color-border);
+
     padding-bottom: 10px;
+
 }
+
 .meta { 
+
     font-size: 0.8rem; 
+
     color: var(--color-primary); 
+
     font-weight: bold; 
+
 }
+
+
+
 
 
 /* ========================================================================
+
    3. LEFT PANEL: COMPONENT LIBRARY
+
    ======================================================================== */
+
 .tabs {
+
     display: flex; 
+
     flex-wrap: wrap; 
+
     gap: 8px; 
+
     margin-bottom: 15px; 
+
 }
+
 .tab {
+
     border: 1px solid var(--color-border);
+
     color: var(--color-text-dim);
+
     padding: 8px 15px;
+
     border-radius: 4px;
+
     cursor: pointer;
+
     font-size: 0.8rem;
+
     background: transparent;
+
     transition: all 0.2s;
+
     border: 1px solid transparent;
+
     min-width: 120px;
+
 }
+
+
 
 .tab:hover { border-color: var(--color-primary); }
 
+
+
 .tab.active {
+
     background: var(--color-primary);
+
     border-color: var(--color-primary);
+
     color: var(--color-background);
+
     font-weight: bold;
+
 }
+
+
 
 .search select { 
+
     width: 100%; 
+
     padding: 8px; 
+
     margin-bottom: 15px; 
+
     background: #111; 
+
     color: var(--color-text-light); 
+
     border: 1px solid #444; 
+
     border-radius: 4px; 
+
 }
+
+
 
 /* Component List */
+
 .components { flex: 1; overflow-y: auto; padding-right: 5px; }
+
 .comp-card {
+
     background: rgba(255,255,255,0.05);
+
     padding: 12px;
+
     border-radius: var(--border-radius-sm);
+
     margin-bottom: 10px;
+
     cursor: grab;
+
     border: 1px solid transparent;
+
     transition: all 0.2s;
+
 }
+
 .comp-card:hover {
+
     border-color: var(--color-primary);
+
     box-shadow: 0 0 8px var(--color-primary-glow);
+
 }
+
 .comp-info strong { display: block; color: var(--color-text-light); font-size: 0.9rem; }
+
 .comp-info span { display: block; font-size: 0.8rem; color: var(--color-text-dim); margin-top: 2px; }
 
+
+
 .pill { 
+
     display: inline-block; 
+
     background: var(--color-primary); 
+
     color: #000; 
+
     font-size: 0.7rem; 
+
     padding: 2px 6px; 
+
     border-radius: 3px; 
+
     margin-top: 6px; 
+
     font-weight: 700;
+
 }
 
 
+
+
+
 /* ========================================================================
+
    4. CENTER PANEL: BUILD LIST
+
    ======================================================================== */
+
 .built-list-container { flex: 1; overflow-y: auto; }
 
+
+
 .built-list-empty-state {
+
     text-align: center; 
+
     color: var(--color-text-dim); 
+
     margin-top: 50px; 
+
     padding: 0 20px;
+
 }
+
+
 
 .built-list-item {
+
     background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent);
+
     padding: 10px 15px;
+
     margin-bottom: 10px;
+
     border-radius: var(--border-radius-sm);
+
     display: flex;
+
     justify-content: space-between; 
+
     align-items: center; 
+
     border-left: 4px solid var(--color-primary);
+
 }
+
+
 
 .bi-info {
+
     flex-grow: 1; 
+
     margin-right: 15px; 
+
 }
+
+
 
 .built-list-item .bi-info {
+
     text-align: left; 
+
     margin-left: 15px;
+
 }
+
+
 
 /* Delete Button (for built list on index.html) */
+
 .btn-delete {
+
     background: transparent;
+
     color: #ff4444; 
+
     border: none;
+
     cursor: pointer;
+
     font-size: 1.2rem;
+
     padding: 5px;
+
     transition: 0.2s;
+
 }
+
+
 
 .btn-delete:hover {
+
     color: var(--color-error); /* Use variable for consistency */
+
 }
+
+
+
 
 
 /* ========================================================================
+
    5. RIGHT PANEL: STATS & FINALIZE
+
    ======================================================================== */
+
 .compat { 
+
     font-size: 0.9rem; 
+
     line-height: 1.4; 
+
     margin-bottom: 10px;
+
     padding: 10px;
+
     border-radius: 4px;
+
     background: rgba(0, 204, 102, 0.1);
+
     color: var(--color-success);
+
 }
+
 .compat-warning { 
+
     background: rgba(255, 187, 0, 0.1); 
+
     color: #ffbb00; 
+
 }
+
+
 
 .bottleneck-panel { 
+
     background: rgba(0,0,0,0.3); 
+
     padding: 15px; 
+
     border-radius: 8px; 
+
     border: 1px solid rgba(255, 255, 255, 0.05);
+
 }
+
+
 
 .bottleneck-status { 
+
     font-size: 0.9rem; 
+
     margin-top: 8px; 
+
     color: var(--color-text-dim); 
-}
-.bottleneck-status.high { color: var(--color-error); }
-.bottleneck-status.low { color: var(--color-success); }
-.stats-panel { 
-    font-weight: bold; 
-    color: var(--color-primary); 
-    margin-top: 15px;
-    text-align: center;
-    padding: 15px;
-    background: rgba(255, 61, 0, 0.1);
-    border-radius: 8px;
+
 }
 
-/* --- FINALIZE BUTTON (Glow) --- */
-.glow-btn {
-    width: 100%;
-    margin-top: 20px;
-    background: linear-gradient(90deg, #ff3d00, #ff9100);
-    color: #000;
-    border: none;
+.bottleneck-status.high { color: var(--color-error); }
+
+.bottleneck-status.low { color: var(--color-success); }
+
+.stats-panel { 
+
+    font-weight: bold; 
+
+    color: var(--color-primary); 
+
+    margin-top: 15px;
+
+    text-align: center;
+
     padding: 15px;
+
+    background: rgba(255, 61, 0, 0.1);
+
+    border-radius: 8px;
+
+}
+
+
+
+/* --- FINALIZE BUTTON (Glow) --- */
+
+.glow-btn {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    background: linear-gradient(90deg, #ff3d00, #ff9100);
+
+    color: #000;
+
+    border: none;
+
+    padding: 15px;
+
     font-size: 0.95rem;
+
     font-weight: 800;
+
     text-transform: uppercase;
+
     letter-spacing: 1px;
+
     border-radius: var(--border-radius-sm);
+
     cursor: pointer;
+
     box-shadow: 0 0 15px var(--color-primary-glow);
+
     transition: all 0.3s ease;
+
     font-family: 'Inter', sans-serif;
+
 }
+
 .glow-btn:hover {
+
     transform: translateY(-2px);
+
     box-shadow: 0 0 30px rgba(255, 61, 0, 0.8);
+
     filter: brightness(1.1);
+
 }
+
+
+
 
 
 /* ========================================================================
+
    6. MODAL & SCROLLBAR
+
    ======================================================================== */
+
 .sf-modal-overlay {
+
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+
     background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
+
     z-index: 9999; display: flex; justify-content: center; align-items: center;
+
     transition: opacity 0.3s ease;
+
 }
+
 .sf-modal-overlay.hidden { opacity: 0; pointer-events: none; }
 
+
+
 .sf-modal-content {
+
     background: #0a0a0a; border: 1px solid var(--color-primary);
+
     box-shadow: 0 0 30px var(--color-primary-glow);
+
     width: 450px; max-width: 90%; padding: 25px; border-radius: 10px;
+
     text-align: center; transform: scale(1);
+
     transition: transform 0.3s;
+
 }
+
 .sf-modal-overlay.hidden .sf-modal-content { transform: scale(0.9); }
 
+
+
 .sf-modal-header h3 { 
+
     color: var(--color-primary); 
+
     margin: 0 0 20px 0; 
+
     border-bottom: 1px solid #333; 
+
     padding-bottom: 15px; 
+
 }
+
+
 
 .sf-modal-body p { 
+
     color: #e0e0e0; 
+
     font-size: 1rem; 
+
     margin-bottom: 30px; 
+
     line-height: 1.6; 
+
 }
+
+
 
 .sf-modal-btn {
+
     background: var(--color-primary); color: #000; border: none; padding: 12px 32px;
+
     font-weight: 800; text-transform: uppercase; cursor: pointer; border-radius: 4px;
+
     transition: 0.2s;
-}
-.sf-modal-btn:hover { 
-    background: #ff6e40; 
-    box-shadow: 0 0 20px var(--color-primary-glow); 
+
 }
 
+.sf-modal-btn:hover { 
+
+    background: #ff6e40; 
+
+    box-shadow: 0 0 20px var(--color-primary-glow); 
+
+}
+
+
+
 /* Scrollbar styling */
+
 ::-webkit-scrollbar { width: 8px; }
+
 ::-webkit-scrollbar-track { background: #111; }
+
 ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+
 ::-webkit-scrollbar-thumb:hover { background: #666; }
 
 
+
+
+
 .comp-card img, 
+
 .comp-card .comp-icon, 
+
 .comp-card .icon-container {
+
     display: none !important;
+
 }
+
+
+
 
 
 .built-list-item img, 
+
 .built-list-item .built-icon, 
+
 .built-list-item .icon-container {
+
     display: none !important;
+
 }
+
+
 
 .replace-btn {
+
     background-color: #ff9800; /* Orange */
+
     color: white;
+
     border: none;
+
     margin-left: 10px;
+
 }
+
+
 
 .replace-btn:hover {
+
     background-color: #e68900;
+
     cursor: pointer;
+
 }
 
+
+
 /* ========================================================================
-   9. DRAFTS PAGE STYLING (FINALIZED FOR NEW JS STRUCTURE)
+
+   7. THEME STYLES & DROPDOWNS (NEWLY ADDED)
+
    ======================================================================== */
+
+
+
+/* --- DARK BLUE THEME --- */
+
+body.theme-dark-blue {
+
+    --color-primary: #0088ff; /* Dark Blue Accent */
+
+    --color-primary-glow: rgba(0, 136, 255, 0.4);
+
+    --color-background: #01041c; /* Very Dark Blue */
+
+    --color-surface: rgba(10, 15, 30, 0.85); /* Slightly Lighter Panel */
+
+    --color-border: #1a2b40;
+
+}
+
+
+
+/* --- LIGHT THEME --- */
+
+body.theme-light {
+
+    --color-primary: #8300ff; /* Purple Accent */
+
+    --color-primary-glow: rgba(131, 0, 255, 0.4);
+
+    --color-background: #e0e0e0;
+
+    --color-surface: rgba(255, 255, 255, 0.9); 
+
+    --color-text-light: #111111;
+
+    --color-text-dim: #555555;
+
+    --color-border: #cccccc;
+
+}
+
+
+
+/* --- LANGUAGE/THEME DROPDOWN STYLES (MATCHES DEFAULT DESIGN) --- */
+
+
+
+.custom-dropdown-container {
+    position: relative;
+    display: inline-block;
+    z-index: 99999;
+
+}
+
+
+
+.custom-dropdown-btn {
+
+    /* ეს არის .btn სტილის კორექტირება, რათა დაემთხვეს .btn-ს */
+
+    background: #222; 
+
+    border: 1px solid #444;
+
+    color: var(--color-text-light);
+
+    transition: all 0.2s;
+
+    line-height: 1; 
+
+    padding: 8px 16px; 
+
+    border-radius: var(--border-radius-sm); 
+
+}
+
+
+
+.custom-dropdown-btn:hover {
+
+    background: #333;
+
+    border-color: var(--color-primary);
+
+}
+
+
+
+.custom-dropdown-content {
+
+    display: none;
+
+    position: absolute;
+
+    top: 100%; 
+
+    right: 0; 
+
+    min-width: 150px;
+
+    /* ვიზუალი ემთხვევა panel-ს: background, border, border-radius */
+
+    background-color: var(--color-surface); 
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Panel-ის მსგავსი ჩრდილი */
+
+    border-radius: var(--border-radius-sm);
+
+    /* 🔥 FIX: z-index-ის გაზრდა, რათა ყოველთვის გამოჩნდეს სხვა ელემენტების თავზე */
+
+    z-index: 10000; 
+
+    padding: 8px 0;
+
+    border: 1px solid var(--color-border);
+
+    margin-top: 5px; 
+
+}
+
+
+
+.custom-dropdown-content.show {
+
+    display: block;
+
+}
+
+
+
+.dropdown-item {
+
+    color: var(--color-text-light);
+
+    padding: 10px 16px;
+
+    text-decoration: none;
+
+    display: block;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+
+    font-size: 0.9rem;
+
+}
+
+
+
+/* Hover ეფექტი default დიზაინით */
+
+.dropdown-item:hover {
+
+    /* ფერი შერეულია Surface-თან, რაც უზრუნველყოფს თანმიმდევრულობას */
+
+    background-color: color-mix(in srgb, var(--color-surface) 80%, #000);
+
+}
+
+
+
+/* Light თემის სპეციფიკური კორექტირება */
+
+body.theme-light .dropdown-item {
+
+    color: var(--color-text-light); /* #111111 */
+
+}
+
+body.theme-light .dropdown-item:hover {
+
+     background-color: #ededed;
+
+}
+
+
+
+/* აქტიური ელემენტი იყენებს ძირითად ფერს glow ეფექტით */
+
+.dropdown-item.active {
+
+    background-color: var(--color-primary-glow);
+
+    color: var(--color-text-light);
+
+    font-weight: bold;
+
+}
+
+
+
+
+
+/* ========================================================================
+
+   9. DRAFTS PAGE STYLING (FINALIZED FOR NEW JS STRUCTURE)
+
+   ======================================================================== */
+
+
 
 .list-panel {
+
     /* ეს ბლოკი უზრუნველყოფს, რომ მთელი პანელი გაიზარდოს და კონტენტი იყოს შიგნით */
+
     display: flex;
+
     flex-direction: column;
+
     min-height: 70vh;
+
     background: var(--color-surface);
+
     border: 1px solid var(--color-border);
+
     border-radius: var(--border-radius-lg);
+
     overflow: hidden; /* მალავს Scrollbar-ს panel-head-ზე */
+
 }
 
+
+
 .drafts-list-container {
+
     /* თუ არ არის შიგნით დრაფტები, ვაცენტრირებთ */
+
     display: flex;
+
     flex-direction: column; /* შიგთავსის მიმართულება */
+
     min-height: 50vh; /* საკმარისი სიმაღლე ცენტრირებისთვის */
+
     
+
     /* თუ მხოლოდ ერთი ელემენტია (built-list-empty-state) */
+
     align-items: center; 
+
     justify-content: center;
+
 }
+
+
 
 /* Draft Card Styling */
+
 .draft-card {
+
     background: rgba(255, 255, 255, 0.05); 
+
     border: 1px solid var(--color-border);
+
     border-radius: var(--border-radius-lg);
+
     padding: 20px;
+
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
     display: flex;
+
     flex-direction: column;
+
     transition: transform 0.2s, box-shadow 0.2s;
+
 }
+
+
 
 .draft-card:hover {
+
     transform: translateY(-3px);
+
     box-shadow: 0 8px 20px var(--color-primary-glow);
+
 }
+
+
 
 .draft-card-header {
+
     /* Flexbox for Title/ID/Date on one side and DELETE button on the other */
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: flex-start; 
+
     border-bottom: 1px solid #282828;
+
     padding-bottom: 10px;
+
     margin-bottom: 15px;
+
 }
+
+
 
 .draft-title-and-index {
-    /* Flex grow needed to occupy available space */
+
     flex-grow: 1; 
+
 }
+
+
 
 .draft-title {
+
     color: var(--color-text-light);
+
     font-size: 1.2rem;
+
     font-weight: 700;
+
     margin-right: 15px; 
+
     display: block; /* Ensures h4 is block level */
+
 }
+
+
 
 .draft-index {
+
     font-size: 0.8em;
+
     font-weight: 400;
+
     color: var(--color-text-dim);
+
     margin-left: 5px;
+
 }
+
+
 
 .draft-date {
+
     font-size: 0.8rem;
+
     color: var(--color-text-dim);
+
     font-weight: 400;
+
     display: block; /* Date below title */
+
     margin-top: 5px;
+
 }
 
+
+
 .draft-card-stats-grid {
+
     /* Two-column layout for key stats */
+
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 10px;
+
     margin-bottom: 15px;
+
 }
+
+
 
 .draft-card-stats-grid p {
+
     font-size: 0.9rem;
+
     color: var(--color-text-light);
+
 }
+
+
 
 .draft-card-stats-grid strong {
+
     color: var(--color-primary);
+
     font-weight: 600;
+
     margin-right: 5px;
+
 }
+
+
 
 /* Delete Button (for drafts.html) */
+
 .btn-delete {
+
     background: #400; 
+
     color: #fdd;
+
     border: 1px solid #800;
+
     padding: 6px 10px;
+
     border-radius: var(--border-radius-sm);
+
     cursor: pointer;
+
     font-weight: 600;
+
     font-size: 0.8rem;
+
     transition: background-color 0.2s, color 0.2s;
+
     line-height: 1;
+
     display: flex;
+
     align-items: center;
+
     gap: 5px;
+
     white-space: nowrap;
+
     flex-shrink: 0; /* Prevents button from shrinking */
+
 }
+
+
 
 .btn-delete:hover {
+
     background: #800;
+
     color: white;
+
 }
+
+
 
 .draft-card-footer .btn {
+
     width: 100%;
+
     text-align: center;
+
     display: block;
+
     margin-top: 10px;
+
 }
+
+
 
 /* ========================================================================
+
    7. DRAFT HISTORY STYLES
+
    ======================================================================== */
+
 .drafts-list-container {
+
     padding: 10px 0;
+
     
+
     /* 🔥 FIX: GRID-ის გამოყენება გვერდიგვერდ განლაგებისთვის 🔥 */
+
     display: grid;
+
     /* შექმენით ავტომატური სვეტები (მინიმალური სიგანით 300px) */
+
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+
     gap: 20px; /* დაშორება ბარათებს შორის */
+
     
+
     /* თუ ცარიელი მდგომარეობა (empty state) ცენტრში გინდათ */
+
     justify-content: center;
+
     align-items: flex-start; /* ბარათები ზემოდან დაიწყება */
+
 }
+
+
 
 /* დავრწმუნდეთ, რომ ცარიელი მდგომარეობა მაინც ცენტრშია, როცა მხოლოდ ის არის */
+
 .drafts-list-container .built-list-empty-state {
+
     /* როდესაც Grid-ში მხოლოდ ერთი ელემენტია, ის მთელ სიგანეს იკავებს */
+
     grid-column: 1 / -1; 
+
     width: 100%; 
+
     display: flex; /* დარწმუნება, რომ შიგნით არსებული P ცენტრირდება */
+
     justify-content: center;
+
     align-items: center;
+
 }
+
+
 
 /* Draft Card-ის განახლებული სტილი (თუ არ გაქვთ) */
+
 .draft-card {
+
     background: #111;
+
     border: 1px solid var(--color-border);
+
     border-radius: var(--border-radius-lg);
+
     /* margin-bottom ამოღებულია Grid-ის გამო */
+
     padding: 15px 20px;
+
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
     transition: transform 0.2s;
+
     height: 100%; /* მნიშვნელოვანია, რომ ყველა ბოქსი იყოს ერთი სიმაღლის */
+
 }
+
+
 
 /* შიდა Grid-ის სტილი Draft Card-ში */
-.draft-card-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* აქ 2 სვეტს ვიყენებთ უკეთესი განლაგებისთვის */
-    gap: 8px;
-    padding: 10px 0;
-    border-top: 1px solid #222;
-}
 
-/* დანარჩენი სტილები (როგორც წინა პასუხში იყო მოცემული) */
-/* ... (draft-card-header, draft-title, list-heading, და ა.შ.) ... */
+.draft-card-stats-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr); /* აქ 2 სვეტს ვიყენებთ უკეთესი განლაგებისთვის */
+
+    gap: 8px;
+
+    padding: 10px 0;
+
+    border-top: 1px solid #222;
+
+}
